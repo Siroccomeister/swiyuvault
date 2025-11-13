@@ -44,10 +44,9 @@ markdown_extensions = [
   "pymdownx.superfences",
   "pymdownx.tasklist",
   "pymdownx.emoji",
+  "attr_list",
+  "md_in_html"
 ]
-
-[project.markdown_extensions_config]
-"pymdownx.tasklist" = {custom_checkbox = true}
 
 
 # Zensical supports both implicit navigation and explicitly defined navigation.
@@ -339,7 +338,7 @@ toggle.name = "Switch to dark mode"
 # This configuration enables native support for Mermaid.js diagrams.
 # Zensical will automatically initialize the JavaScript runtime 
 # when a page includes a mermaid code block:
-[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions_config.pymdownx.superfences]
 custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
 ]
