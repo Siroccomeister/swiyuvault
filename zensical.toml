@@ -37,7 +37,17 @@ copyright = """
 Copyright &copy; Siroccomeister
 """
 
+# These work automatically in 'serve' but must be explicit for 'build'
+markdown_extensions = [
+  "admonition",
+  "pymdownx.details",
+  "pymdownx.superfences",
+  "pymdownx.tasklist",
+  "pymdownx.emoji",
+]
 
+[project.markdown_extensions_config]
+"pymdownx.tasklist" = {custom_checkbox = true}
 
 
 # Zensical supports both implicit navigation and explicitly defined navigation.
