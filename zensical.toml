@@ -335,6 +335,11 @@ toggle.name = "Switch to dark mode"
 #logo = "lucide/smile"
 #repo = "lucide/smile"
 
+
+# Get the nice green checkboxes...
+[project.markdown_extensions_config.pymdownx.tasklist]
+custom_checkbox = true
+
 # This configuration enables native support for Mermaid.js diagrams.
 # Zensical will automatically initialize the JavaScript runtime 
 # when a page includes a mermaid code block:
