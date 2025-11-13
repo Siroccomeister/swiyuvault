@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <script>
+    window.ZENSICAL_CONFIG = {
+      vc_proxy_url: "{{ config.extra.vc_proxy_url | default('') }}",
+      default_name: "{{ config.extra.default_name | default('') }}",
+      default_last: "{{ config.extra.default_last | default('') }}",
+      default_class: "{{ config.extra.default_class | default('Platinum') }}",
+      default_valid_from: "{{ config.extra.default_valid_from | default('') }}",
+      default_valid_to: "{{ config.extra.default_valid_to | default('') }}",
+      status_list_url: "{{ config.extra.status_list_url | default('') }}",
+      
+      // Placeholders
+      placeholder_firstname: "{{ config.extra.placeholder_firstname | default('Enter your first name') }}",
+      placeholder_lastname: "{{ config.extra.placeholder_lastname | default('Enter your last name') }}",
+      placeholder_birthdate: "{{ config.extra.placeholder_birthdate | default('DD-MM-YYYY') }}",
+      
+      // Membership options
+      membership_options: {{ config.extra.membership_options | default('["Platinum", "Gold", "Silver"]') | tojson }}
+    };
+  </script>
+  {{ super() }}
+{% endblock %}
