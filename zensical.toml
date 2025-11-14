@@ -353,7 +353,9 @@ emoji_index = "zensical.extensions.emoji.twemoji"
 [project.markdown_extensions.pymdownx.mark]
 [project.markdown_extensions.pymdownx.smartsymbols]
 [project.markdown_extensions.pymdownx.superfences]
-# Add your mermaid config here if needed
+custom_fences = [
+  { name = "mermaid", class = "mermaid" }
+]
 
 [project.markdown_extensions.pymdownx.tabbed]
 alternate_style = true
@@ -366,10 +368,12 @@ custom_checkbox = true
 # This configuration enables native support for Mermaid.js diagrams.
 # Zensical will automatically initialize the JavaScript runtime 
 # when a page includes a mermaid code block:
-[project.markdown_extensions_config.pymdownx.superfences]
-custom_fences = [
-  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
-]
+#[project.markdown_extensions_config.pymdownx.superfences]
+#custom_fences = [
+#  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+#]
+
+
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.

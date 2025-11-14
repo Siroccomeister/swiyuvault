@@ -5,31 +5,27 @@ title: Demo 1
 
 # Issuer workflow : create Verifiable Credentials
 
-Now that our organisation is trusted and has its place in the Base Registry, let's set-up the type of credentials we want to manage.
+Now that our organisation is trusted and has its place in the Base Registry, we can run a real end-to-end test that a) issues a verifiable credential and b) loads it into the swiyu wallet.
 
-## Cheatsheet
-### CORS injection tweak
+## Live demo pre-requisites
 
-Pre-checks :
-AS I run all my services from MAC-mini I don't really have a hosted platform. Therefore for the demo to work :
+For the demo to work, we need the following :
 
-- [x] Docker (free) needs to run the SWIYU ISSUER SERVICE
-- [x] ngrok (free) needs to run to build a tunnel from the internet and make the service accessible >> a specific url is provided
-- [x] Vercel needs to run a PROXY service to reach the BACKEND
+- [ ] Start Issuer Back-end : swiyu api service : runs on localhost (Docker)
+- [ ] Initiate ngrok tunnel : internet --> localhost/swagger
+- [ ] ngrok url --> inserted into vercel proxy config
+
+If conditions are not met - the demo is not going to work.
+
+!!! warning "Manual steps for now"
+
+    At the moment, this can be done manually. \
+    I will try to automate it through a remote ssh access to my mac mini in order to trigger a script to secure a run time.
+    
 
 
-WEBPAGE <> VERCEL PROXY <> NGROK TUNNEL <> SWIYU ISSUER (on MAC MINI)
 
-Therefore for this DEMO to run LIVE, services need to spin-up AND the PROXY needs to get informed of the ACTUAL NGROK url. 
-
-
-
-
-https://cors-test.codehappy.dev/?url=https%3A%2F%2Fronda-rhonchial-janice.ngrok-free.dev%2Fswagger-ui%2Findex.html&origin=https%3A%2F%2Fcors-test.codehappy.dev%2F&method=get
-
-ngrok http 8080 --response-header-add="Access-Control-Allow-Origin: *"
-
-## 🎯 SWIYU VC Demo – End-to-End Test!
+## SWIYU VC Demo – End-to-End Test!
 
 <form id="vc-form">
   <label for="firstName">First Name:</label>
