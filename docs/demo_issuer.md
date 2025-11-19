@@ -7,10 +7,11 @@ title: Demo 1
 
 Now that our organisation is trusted and has its place in the Base Registry, we can run a real end-to-end test that a) issues a verifiable credential and b) loads it into the swiyu wallet.
 
-## Live demo pre-requisites
+## Demo pre-requisites
 
 For the demo to work, we need the following :
 
+- [ ] Load configuration : source swiyu_env_issuer.txt
 - [ ] Start Issuer Back-end : swiyu api service : runs on localhost (Docker)
 - [ ] Initiate ngrok tunnel : internet --> localhost/swagger
 - [ ] ngrok url --> inserted into vercel proxy config
@@ -25,7 +26,7 @@ If conditions are not met - the demo is not going to work.
 
 
 
-## SWIYU VC Demo – End-to-End Test!
+## SWIYU issuer demo
 
 <form id="vc-form">
   <label for="firstName">First Name:</label>
@@ -62,3 +63,17 @@ If conditions are not met - the demo is not going to work.
 
 <h3 class="output-title">Step 3: Claim Your Credential 🎯</h3>
 <div id="qr-div"></div>
+
+## Swiyu App
+
+Now once a new Verifiable Credential has been issued, it can be retrieved by one instance (person/Swiyu app). The below picture of my mobile phone shows how these cards are then installed into your Swiyu Wallet.
+
+<figure markdown>
+![Illustration of Swiyu eWallet app](assets/images/eWallet.png){ width=50% }
+<figcaption markdown> Illustration of Swiyu eWallet app</figcaption>
+</figure>
+
+<figure markdown>
+![Credential loaded into Swiyu eWallet app](assets/images/VC_card.png){ width=50% }
+<figcaption markdown> Credential loaded into Swiyu eWallet app</figcaption>
+</figure>

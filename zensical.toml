@@ -66,6 +66,11 @@ nav = [
       { "Zensical tips" = "ref_zensical_tips.md" },
       { "Swiyu workarounds" = "ref_swiyu_installs.md" },
       { "Markdown" = "ref_markdown.md" }
+  ]},
+  
+  { "Security" = [
+      { "Safebox" = "sec_safebox.md" },
+      { "Enforcement" = "sec_enforced.md" },
   ]}
 ]
 
@@ -385,8 +390,13 @@ custom_checkbox = true
 # ----------------------------------------------------------------------------
 # The "params" section contains my .env variables
 # ----------------------------------------------------------------------------
+
 [project.extra]
+# ============================================================================
+# ISSUER DEMO CONFIG
+# ============================================================================
 vc_proxy_url = "https://proxy-cors-azure.vercel.app/api/proxy"
+issuer_url = "https://issuer.atarigo.net" 
 default_name = "enter FIRST NAME here"
 default_last = "enter LAST NAME here"
 default_class = "Platinum"
@@ -401,3 +411,22 @@ placeholder_birthdate = "DD-MM-YYYY"
 
 # Membership class options (for dropdown)
 membership_options = ["Platinum", "Gold", "Silver"]
+
+# ============================================================================
+# VERIFIER DEMO CONFIG
+# ============================================================================
+verifier_url = "https://verifier.atarigo.net"
+verifier_issuer_did = "did:tdw:Qmd3bQVN981hgAUY9f6Dvi7ExPsTgZg6QpqnoBoJrVgSpF:identifier-reg.trust-infra.swiyu-int.admin.ch:api:v1:did:8a03370b-030f-4537-a8f4-8b8b8190b215"
+verifier_refresh_interval = 2000  # milliseconds between status checks
+verifier_credential_type = "my-test-vc"
+verifier_qr_size = 300  # QR code size in pixels
+
+# Verifier demo UI text
+verifier_title = "Atarigo Club Event Check-In"
+verifier_subtitle = "Scan to verify your membership"
+verifier_pending_message = "Waiting for verification..."
+verifier_success_message = "Welcome!"
+verifier_error_message = "Verification failed. Please try again."
+
+# Requested fields from credential (what to display after verification)
+verifier_requested_fields = ["firstName", "lastName", "birthDate", "membershipClass"]

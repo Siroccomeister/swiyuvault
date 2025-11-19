@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <script>
+    window.VERIFIER_CONFIG = {
+      verifier_url: "{{ config.extra.verifier_url | default('') }}",
+      issuer_did: "{{ config.extra.verifier_issuer_did | default('') }}",
+      refresh_interval: {{ config.extra.verifier_refresh_interval | default('2000') }},
+      credential_type: "{{ config.extra.verifier_credential_type | default('my-test-vc') }}"
+    };
+    console.log('✅ VERIFIER_CONFIG set:', window.VERIFIER_CONFIG);
+  </script>
+  {{ super() }}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ 'assets/javascripts/verifier-demo.js' | url }}"></script>
+{% endblock %}

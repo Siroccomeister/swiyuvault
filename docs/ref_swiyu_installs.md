@@ -3,9 +3,9 @@ icon: lucide/blocks
 title: Swiyu installs
 ---
 
-#  Local software
+#  Software & Workarounds
 
-This section describes the local software requirements I had to comply with in order to work myself across the cookbooks and also set-up the demos.
+This section describes the local software requirements I had to comply with in order to work myself across the cookbooks. Furthermore - in order to set-up the test use cases with a demo logic in mind, different workarounds were required. Both are documented here.
 
 ## Java & didtoolbox.jar
 
@@ -38,7 +38,7 @@ The SWIYU team are indeed providing trust infrastructure services made available
 
 !!! note "You cannot adapt/recompile swiyu code"
 
-    The code is transparently shared. Everyone can look into the structure, the components. But you cannot modify it and if you do, recompile it. If you're not in the private/secure swiyu development area (with access to specific proxy and servers) - it will not work.
+    The code is transparently shared. Everyone can look into the structure, the components. But you're not meant to modify it and if you do, you can't recompile it. If you're not in the private/secure swiyu development area (with access to specific proxy and servers) - it will not work. I wanted to adapt the CORS/proxy behaviour of the API responses and could not (which is good in fact).
 
 Docker is dead-easy. Works out of the box and provides simple orchestration for multi-container applications using two key commands.
 
@@ -59,15 +59,15 @@ Think of it as **one-command deployment** and **one-command cleanup** for comple
 
 !!! note "adapting your docker-compose.yml file"
 
-    You'll need to adapt the configuration file - but a workable template is part of the swiyu distribution. Just follow the cookbook directions.
+    You'll need to adapt the configuration file - but a workable template is part of the swiyu distribution. Just follow the cookbook directions 👍.
 
 ## Workarounds
 
-As I am not really a software developer but more a computer engineer that enjoys good documentation and low-code/agile learning practice - I like to keep things simple and free.
+As I am not really a software developer but more a computer engineer that enjoys good knowledge sharing/documentation and low-code/agile learning in practice - I like to keep things simple and free (=opensource).
 
 ### Static websites
 
-Now one thing you rapidly learn is that Zenscical/GitHub/Gitlab/Material for MKDOCS are all designed to work with static project sites. Of course, any code can be worked on in GitHub. But if you want to render a project page - it will be a static page. Fine for me - this is simple and to be honest, it allows you already to do a lot (html, css, javascript, plugins). But it does drive some limitations as well. 
+Now one thing you rapidly learn is that Zenscical/GitHub/Gitlab/Material for MKDOCS are all designed to work with ^^static^^ project sites. Of course, any code can be worked on in GitHub. But if you want to render a project page - it will be a static page. Fine for me - this is simple and to be honest, it allows you already to do a lot (html, css, javascript, plugins). But it does drive some limitations as well. 
 
 And I am not yet ready to pay for a fully-fledged hosting server where I would be maintaining front-end and back-end etc. Luckily there are workarounds.
 
@@ -150,7 +150,7 @@ All I needed to do then is to create a new repository on GitHub. I created the n
 	       
     The response from SWIYU flows back through the same chain, with the proxy injecting  Access-Control-Allow-Origin headers before returning data to the browser. This allows my static frontend to read the API response without CORS errors.
     
-Key implementation detail: The  Access-Control-Allow-Origin: *  wildcard allows any origin to access the proxy . For production use, this should be restricted to specific domains for security .
+Key implementation detail: The  Access-Control-Allow-Origin should be restricted to specific domains for security. Think of access list of authoritative origin domains/sites and I should also add additional authentication layer on top.
     
 ``` mermaid
 flowchart LR

@@ -126,24 +126,35 @@ document$.subscribe(function() {
         birthDate: birthDateAPI,
         membershipClass: membershipEl ? membershipEl.value : 'Platinum'
       },
+      credential_metadata: {
+         "vct#integrity": "sha256-0000000000000000000000000000000000000000000="
+      },
       offer_validity_seconds: 86400,
       credential_valid_until: padDate(validUntilEl ? validUntilEl.value : ''),
       credential_valid_from: padDate(validFromEl ? validFromEl.value : ''),
       status_lists: [statusListEl ? statusListEl.value : '']
     };
 
+    // Get the issuer URL from window config
+    // const config = window.ZENSICAL_CONFIG;
+    const targetUrl = config.issuer_url + "/management/api/credentials";
+        
     // Display cURL
     const curlEl = document.getElementById('curl-command');
     if (curlEl) {
-      curlEl.textContent = `curl -X POST '${endpoint}' \\\n  -H 'Content-Type: application/json' \\\n  -d '${JSON.stringify(payload).replace(/\n/g, '')}'`;
+      curlEl.textContent = `curl -X POST '${endpoint}' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Target-URL: ${targetUrl}' \\\n  -d '${JSON.stringify(payload).replace(/\n/g, '')}'`;
     }
 
+    
     // Call API
     let respData;
     try {
       const resp = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Target-URL': targetUrl
+        },
         body: JSON.stringify(payload)
       });
       const text = await resp.text();

@@ -4,6 +4,7 @@
   <script>
     window.ZENSICAL_CONFIG = {
       vc_proxy_url: "{{ config.extra.vc_proxy_url | default('') }}",
+      issuer_url: "{{ config.extra.issuer_url | default('') }}",
       default_name: "{{ config.extra.default_name | default('') }}",
       default_last: "{{ config.extra.default_last | default('') }}",
       default_class: "{{ config.extra.default_class | default('Platinum') }}",
