@@ -94,7 +94,7 @@ extra_css = ["assets/stylesheets/extra.css"]
 # The path provided should be relative to the "docs_dir".
 #
 # Read more: https://zensical.org/docs/customization/#additional-javascript
-extra_javascript = ["assets/javascripts/demo-form.js"]
+#extra_javascript = ["assets/javascripts/demo-form.js"]
 
 
 # ----------------------------------------------------------------------------
@@ -215,7 +215,7 @@ features = [
     # When instant navigation is enabled, clicks on all internal links will be
     # intercepted and dispatched via XHR without fully reloading the page.
     # https://zensical.org/docs/setup/navigation/#instant-navigation
-    "navigation.instant",
+    #"navigation.instant",
 
     # With instant prefetching, your site will start to fetch a page once the
     # user hovers over a link. This will reduce the perceived loading time

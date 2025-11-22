@@ -86,13 +86,13 @@ name = "tags"
     If you start working with overrides, extra.css and javascripts, ensure they are :
     1. In the right folders (overrides is at the same level than your zensical.toml ; I personally put all others into /docs/assets)
     2. More importantly : you need to force a clean re-build of zensical for the changes to be fully considered
-    
+
 ``` zsh title="force clean zensical build"
 # The default zensical serve is not enough
 zensical build --clean        <--- this will force a reload
 zensical serve
-``` 
-    
+```
+
 For troubleshooting purposes, don't hesitate to look into your browser ^^console/page source^^ to check if you desired changes are even taken into account. 
 
 ### Global env variables
@@ -128,6 +128,6 @@ It was tricky for me to get sorted with my overrides. One of the pitfalls you ma
 ```
 
 
-The Zensical documentation is ususally very clear. But when you're designing your own site esp. with customisation and custom javascript/CSS/html code, it rarely works out of the box...
+The Zensical documentation is usually very clear. But when you're designing your own site esp. with customisation and custom javascript/CSS/html code, it rarely works out of the box...
 
 Eventually it is all good - you can really achieve this without breaking the theme. But for a low code developer like me - I definitely needed help of an AI (used Perlexity/Claude).

@@ -1,0 +1,236 @@
+/* ============================================================================
+   Swiyu ISSUER Demo Styles
+   Demo-specific form, QR codes, outputs, and status badges
+   ============================================================================ */
+
+/* ============================================================================
+   Form Status Indicator (Top Border)
+   ============================================================================ */
+#vc-form {
+    /* ... existing styles ... */
+    border-top: 4px solid #666; /* Default: gray */
+    transition: border-top-color 0.3s ease;
+}
+
+/* Status color variants */
+#vc-form.status-checking {
+    border-top-color: #666;
+}
+
+#vc-form.status-up {
+    border-top-color: #28a745; /* Green */
+}
+
+#vc-form.status-down {
+    border-top-color: #dc3545; /* Red */
+}
+
+#vc-form.status-starting {
+    border-top-color: #ffc107; /* Yellow */
+}
+
+/* ============================================================================
+   VC Form Styling
+   ============================================================================ */
+#vc-form {
+    max-width: 440px;
+    margin: 2em auto;
+    padding: 25px 25px 10px 25px;
+    border-radius: 14px;
+    border: 1.5px solid #cacaca40;
+    box-shadow: 0 2px 12px #0001;
+    background: var(--vcd-form-bg, rgba(245, 247, 250, 0.93));
+}
+
+#vc-form label {
+    font-weight: 500;
+    margin-top: 7px;
+    margin-bottom: 0;
+    letter-spacing: 0.02em;
+    display: block;
+}
+
+#vc-form input,
+#vc-form select {
+    display: block;
+    width: 100%;
+    font-size: 1.05em;
+    background: #fff;
+    color: #1b1d21;
+    border: 1px solid #bbc7da;
+    border-radius: 6px;
+    padding: 9px 11px;
+    margin-top: 3px;
+    margin-bottom: 4px;
+    outline: none;
+    transition: border 0.13s;
+}
+
+#vc-form input:focus,
+#vc-form select:focus {
+    border-color: #6e9eff;
+}
+
+#vc-form button {
+    margin-top: 18px;
+    width: 100%;
+    background: linear-gradient(90deg, #08cab7, #008cff);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 0;
+    font-size: 1.18em;
+    box-shadow: 0 2px 5px #bbb;
+    cursor: pointer;
+    transition: background 0.14s;
+}
+
+#vc-form button:hover {
+    background: linear-gradient(90deg, #16efb5, #0a5cf0);
+}
+
+/* Dark mode for VC form */
+@media (prefers-color-scheme: dark) {
+    #vc-form {
+        background: #23272e !important;
+        color: #f7f7fc !important;
+        border-color: #344160;
+    }
+    
+    #vc-form label {
+        color: #fafaff !important;
+    }
+    
+    #vc-form input,
+    #vc-form select {
+        background: #181b23 !important;
+        color: #f4f7fa !important;
+        border-color: #395177 !important;
+    }
+}
+
+/* ============================================================================
+   Form Input States
+   ============================================================================ */
+input[readonly],
+select[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #666;
+}
+
+/* ============================================================================
+   QR Code Display
+   ============================================================================ */
+#qr-div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#qr-code-container {
+    display: inline-block;
+    margin: 20px auto;
+    max-width: 256px;
+}
+
+#qr-code-container img,
+#qr-code-container canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 256px;
+}
+
+/* ============================================================================
+   Output Sections (Step 1/2/3)
+   ============================================================================ */
+.output-title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.output-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow-x: auto;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', 'Monaco', monospace;
+    font-size: 0.9em;
+    line-height: 1.6;
+    border: 1px solid #ddd;
+}
+
+/* Dark mode for output sections */
+@media (prefers-color-scheme: dark) {
+    .output-content {
+        background-color: #1e2228 !important;
+        color: #e4e7eb !important;
+        border-color: #3a4252 !important;
+    }
+}
+
+/* ============================================================================
+   Mobile Responsiveness
+   ============================================================================ */
+@media (max-width: 768px) {
+    #vc-form {
+        max-width: 100%;
+        padding: 15px;
+        margin: 1em 10px;
+    }
+    
+    #vc-form input,
+    #vc-form select,
+    #vc-form button {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .service-status-badge {
+        font-size: 13px;
+        padding: 10px 15px;
+    }
+}
+
+/* ============================================================================
+   Deep Link Button (Mobile-Friendly)
+   ============================================================================ */
+.deep-link-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #08cab7, #008cff);
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.deep-link-button:hover {
+    background: linear-gradient(90deg, #16efb5, #0a5cf0);
+    transform: translateY(-2px);
+    color: white !important;
+    text-decoration: none !important;  /* ✅ Add this line */
+}
+
+.deep-link-button:active {
+    transform: translateY(0);
+}
+
+/* Make button prominent on mobile */
+@media (max-width: 768px) {
+    .deep-link-button {
+        font-size: 1.2em;
+        padding: 14px 28px;
+        width: 90%;
+        max-width: 300px;
+    }
+}
+

@@ -74,95 +74,11 @@ Thanks to the [toolbox](ref_swiyu_installs/#java-didtoolboxjar), we are able to 
 The rest of the cookbook provides clear directions how to interact step-by-step with the Base Registry using the exposed APIs, the provided tokens, your identifiers and 
 
 ### What I have achieved
-- My organisation is now trusted by SWIYU and enabled to manage its space in the BASE REGISTRY. In that SPACE, I am able to maintain a LIST (a kind of index) of credentials with a status for each credential.
-- My organisation can now issue so-called verifiable credentials (VC) that are signed. **Anyone** can seek verification of this credential to confirm it is valid and use specific information that users accept to share :
-		1. Download the status list of my organisation from the Base Registry.
-		2. Look-up the VC status from that list.
+- [x] My organisation is now trusted by SWIYU and enabled to manage its space in the BASE REGISTRY. In that SPACE, I am able to maintain a LIST (a kind of index) of credentials with a status for each credential.
+- [x] My organisation can now issue so-called verifiable credentials (VC) that are signed. **Anyone** can seek verification of this credential to confirm it is valid and use specific information that users accept to share :
+	- [x] Download the status list of my organisation from the Base Registry.
+	- [x] Look-up the VC status from that list.
 
-## :wrench: Cheatsheet 
-
-This section aims at collecting some specific lesson learned. If I was to redo the whole process again, the below are useful hints to revive understanding, tips and context.
-
-The APIs can be accessed via the following urls.
-
-Environment	: swiyu Public Beta
-Identifier Authoring : https://identifier-reg-api.trust-infra.swiyu-int.admin.ch		
-Status Authoring: https://status-reg-api.trust-infra.swiyu-int.admin.ch	
-Key Manager : https://keymanager-prd.api.admin.ch
-
-The organisation gets uniquely defined through PKI keys (didtool). A public/private set of keys is generated.
-
-### How does it work
-
-API by TYPE : 3 roles
-- TRUST
-- STATUS
-- IDENTIFIER
-
-API_table.png
-
-### Standards used
-
-These are the key standards that I have identified to be followed by swiyu.
-
-SSI/PKI infrastructure. Authentication. etc...
-
-### Sensitive Information
-
-The proposed Swiss Trust Infrastructure relies on transparency and is decentralised. Most of the information is therefore public. But part of the information is extremely sensitive and should never be shared.
-
-This section aims at providing clarity and examples. It may even outline possible threat scenarii (such as identity substitution or subponeation).
-
-### One application for one API
-
-<Generic Appl>_<SWIYU_PARTNER_ID>
-prod_Atarigo-pams_20ca7f96-575b-439e-ac58-2802d533e39b
-
-<Identifier Appl>_<SWIYU_PARTNER_ID>
-prod_Atarigo_identifer-pams_20ca7f96-575b-439e-ac58-2802d533e39b
-
-### Work with Swiyu environmental variables
-
-This is the list of variables you'll need as you go through the process. Most of them are provided by the ePortal or through the different exchanges with the APIs.
-
-Practical hint : I compiled them into a single text file that I was loading into my shell environment : 
-
-``` py title="how to maintain your swiyu environment variables"
-
-# I recommend to load all variables into a text file
-export SWIYU_VARIABLE_X="<variable_X>
-export SWIYU_VARIABLE_Y="<variable_Y>
-export SWIYU_VARIABLE_Z="<variable_Z>
-
-# You may iterate/amend your text file.
-# Each time you'll need to reload it into the shell.
-source env_swiyu.txt
-```
-
-For illustration purposes, you can see below the main variables that I have been collecting and maintaining as I progressed step-by-step into the base & trust registry.
-
-!!! note "" 
-
-		SWIYU_IDENTIFIER_REGISTRY_URL
-		SWIYU_STATUS_REGISTRY_API_URL
-		
-		SWIYU_PARTNER_ID
-		IDENTIFIER_REGISTRY_URL
-		IDENTIFIER_REGISTRY_ID
-		STATUS_REGISTRY_URL
-		STATUS_REGISTRY_ID
-		
-		SWIYU_IDENTIFIER_REGISTRY_ACCESS_TOKEN
-		SWIYU_IDENTIFIER_REGISTRY_BOOTSTRAP_REFRESH_TOKEN
-		SWIYU_IDENTIFIER_REGISTRY_CUSTOMER_KEY
-		SWIYU_IDENTIFIER_REGISTRY_CUSTOMER_SECRET
-		
-		SWIYU_STATUS_REGISTRY_ACCESS_TOKEN
-		SWIYU_STATUS_REGISTRY_BOOTSTRAP_REFRESH_TOKEN
-		SWIYU_STATUS_REGISTRY_CUSTOMER_KEY
-		SWIYU_STATUS_REGISTRY_CUSTOMER_SECRET
-
-
-
+In the [Issuer section,](role_issuer) we can see how to set-up a Swiyu Issuer Service. And there's even a [Demo](demo_issuer) for it!
 
 

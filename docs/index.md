@@ -4,165 +4,51 @@ icon: lucide/rocket
 
 # Get started
 
-Documentation that simply works!
 
-For full documentation visit [zensical.org](https://zensical.org/docs/).
+## Purpose
 
-## Commands
+This aim of this project is to get familiar with the cutting-edge Swiss eID infrastructure [Swiyu](https://www.eid.admin.ch/en/swiyu-coming-soon-e) by developing a website/demo leveraging as well the new [Zensical](https://zensical.org) framework developed by the makers of Material for MKDOCS.
 
-* [`zensical new`][new] - Create a new project
-* [`zensical serve`][serve] - Start local web server
-* [`zensical build`][build] - Build your site
+<div style="display: flex; align-items: center; gap: 2%; justify-content: center;">
+  <img src="assets/images/swiyu.png" style="height: 120px; width: auto;">
+  <img src="assets/images/zensical.svg" style="height: 120px; width: auto;">
+</div>
 
-  [new]: https://zensical.org/docs/usage/new/
-  [serve]: https://zensical.org/docs/usage/preview/
-  [build]: https://zensical.org/docs/usage/build/
+The whole project is on my GitHub repository. You may clone it and adapt it to your own needs if your feel inspired! Reach out to me via GitHub if you have questions.
 
-## Examples
+### Context
 
-### Admonitions
+^^Swiyu^^ system entered public beta in early 2025 and is planned for official launch in 2026, with the Self-Sovereign Identity (SSI) architecture prioritizing privacy by design and user-centricity.
 
-> Go to [documentation](https://zensical.org/docs/authoring/admonitions/)
+^^Zensical^^ (launched in alpha, Nov.2025) is an ambitious overhaul of the Material for MKDOCS framework. It offers hands-on exposure to modern static site generation built with Rust (high-performance parallel builds), MiniJinja templates (Rust-based parallel rendering engine), and TOML configuration (human-readable, type-safe alternative to YAML).
 
-!!! note
+### Learnings and achievements
 
-    This is a **note** admonition. Use it to provide helpful information.
+!!! success "key takeaway on ethics and privacy"
 
-!!! warning
+    SWIYU preserves your privacy by design. I really liked the decentralised approach which ^^prevents the Base Registrar (FedPol) to track the actual use^^ a private person or a verifier does of his issued credentials. Contrary to some alternative implementations you may encounter in other European countries.
 
-    This is a **warning** admonition. Be careful!
+- [x] registered organisation "ATARIGO" into the Swiyu Beta Base Registry
+- [x] registered and loaded ISSUER identity and status-list
+- [x] registered and loaded VERIFIER identity
+- [x] DEMO 1 : issue an ATARIGO Verified Credential ; load it into Swiyu eWallet app
+- [x] DEMO 2 : verify ATARIGO Verified Credential ; read from Swiyu eWallet app
+- [x] First Zensical static site, enriched with javascript and extra css
+- [x] Integration with CloudFlare, Docker, Vercel to handle demo workflows
+- [x] Active AI support from Perplexity in low code for all the above
 
-### Details
+### Standards Being Used
+The implementation aligns with the latest OpenID4VC specifications :
 
-> Go to [documentation](https://zensical.org/docs/authoring/admonitions/#collapsible-blocks)
+- OpenID4VCI (Verifiable Credential Issuance): Working Group Draft 15 (December 2024)
+- OpenID4VP (Verifiable Presentations): Working Group Draft 28 (April 2025)
+- W3C VC Data Model: Underpinning verifiable credentials structure
+- Swiss Trust Infrastructure: DIDAS-influenced ecosystem approach
 
-??? info "Click to expand for more info"
-    
-    This content is hidden until you click to expand it.
-    Great for FAQs or long explanations.
+### Limitations
+#### Demo vs. Production
+For all functionalities such as the demos to work, I need to spring boot docker services on my mac mini and tunnels to reach them. To make all services reachable permanently, I would need a server hosted solution. But if your objective is learning and sharing - this is perfectly fine !
+#### Version Pinning Strategy
 
-## Code Blocks
+For Docker image stability, best practices recommend minor version pinning as the sweet spot. Therefore, once the demo workflows worked, I stabilisted the dependencies with the official GitHub repositories maintained by the Swiyu team. Thus avoiding services will unexpectedly break from upstream changes! 
 
-> Go to [documentation](https://zensical.org/docs/authoring/code-blocks/)
-
-``` python hl_lines="2" title="Code blocks"
-def greet(name):
-    print(f"Hello, {name}!") # (1)!
-
-greet("Python")
-```
-
-1.  > Go to [documentation](https://zensical.org/docs/authoring/code-blocks/#code-annotations)
-
-    Code annotations allow to attach notes to lines of code.
-
-Code can also be highlighted inline: `#!python print("Hello, Python!")`.
-
-## Content tabs
-
-> Go to [documentation](https://zensical.org/docs/authoring/content-tabs/)
-
-=== "Python"
-
-    ``` python
-    print("Hello from Python!")
-    ```
-
-=== "Rust"
-
-    ``` rs
-    println!("Hello from Rust!");
-    ```
-
-## Diagrams
-
-> Go to [documentation](https://zensical.org/docs/authoring/diagrams/)
-
-``` mermaid
-graph LR
-  A[Start] --> B{Error?};
-  B -->|Yes| C[Hmm...];
-  C --> D[Debug];
-  D --> B;
-  B ---->|No| E[Yay!];
-```
-
-## Footnotes
-
-> Go to [documentation](https://zensical.org/docs/authoring/footnotes/)
-
-Here's a sentence with a footnote.[^1]
-
-Hover it, to see a tooltip.
-
-[^1]: This is the footnote.
-
-
-## Formatting
-
-> Go to [documentation](https://zensical.org/docs/authoring/formatting/)
-
-- ==This was marked (highlight)==
-- ^^This was inserted (underline)^^
-- ~~This was deleted (strikethrough)~~
-- H~2~O
-- A^T^A
-- ++ctrl+alt+del++
-
-## Icons, Emojis
-
-> Go to [documentation](https://zensical.org/docs/authoring/icons-emojis/)
-
-* :sparkles: `:sparkles:`
-* :rocket: `:rocket:`
-* :tada: `:tada:`
-* :memo: `:memo:`
-* :eyes: `:eyes:`
-
-## Maths
-
-> Go to [documentation](https://zensical.org/docs/authoring/math/)
-
-$$
-\cos x=\sum_{k=0}^{\infty}\frac{(-1)^k}{(2k)!}x^{2k}
-$$
-
-!!! warning "Needs configuration"
-    Note that MathJax is included via a `script` tag on this page and is not
-    configured in the generated default configuration to avoid including it
-    in a pages that do not need it. See the documentation for details on how
-    to configure it on all your pages if they are more Maths-heavy than these
-    simple starter pages.
-
-<script id="MathJax-script" async src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [["\\(", "\\)"]],
-      displayMath: [["\\[", "\\]"]],
-      processEscapes: true,
-      processEnvironments: true
-    },
-    options: {
-      ignoreHtmlClass: ".*|",
-      processHtmlClass: "arithmatex"
-    }
-  };
-</script>
-
-## Task Lists
-
-> Go to [documentation](https://zensical.org/docs/authoring/lists/#using-task-lists)
-
-* [x] Install Zensical
-* [x] Configure `zensical.toml`
-* [x] Write amazing documentation
-* [ ] Deploy anywhere
-
-## Tooltips
-
-> Go to [documentation](https://zensical.org/docs/authoring/tooltips/)
-
-[Hover me][example]
-
-  [example]: https://example.com "I'm a tooltip!"

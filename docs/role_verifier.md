@@ -28,7 +28,7 @@ The below mermaid flowchart aims at describing the different steps & identities.
 
 ``` mermaid
 flowchart TB
-    BP[Business Partner: Atarigo]
+    BP{{Business Partner: Atarigo}}
     
     BP --> ISSUER_DID[Issuer DID]
     BP --> VERIFIER_DID[Verifier DID]
@@ -44,13 +44,11 @@ flowchart TB
     VERIFIER_ID_APP -.->|subscription| ID_API
     VERIFIER_ST_APP -.->|subscription| STATUS_API
     
-    ID_API --> BASE_REG[Base Registry]
+    ID_API --> BASE_REG{{Base Registry}}
     STATUS_API --> BASE_REG
     
-    style BP fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#ffffff
-    style ISSUER_DID fill:#e94560,color:#ffffff
-    style VERIFIER_DID fill:#e94560,color:#ffffff
-    style BASE_REG fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#ffffff
+    style ISSUER_DID fill:#3498DB,stroke:#2874A6,stroke-width:2px,color:#fff
+    style VERIFIER_DID fill:#3498DB,stroke:#2874A6,stroke-width:2px,color:#fff
 
 ```
 </div>

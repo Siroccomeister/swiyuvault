@@ -310,3 +310,72 @@
     gap: 5px;
   }
 }
+
+/* ============================================================================
+   Deep Link Button (Mobile-Friendly)
+   ============================================================================ */
+.deep-link-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(90deg, #08cab7, #008cff);
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s, transform 0.1s;
+}
+
+.deep-link-button:hover {
+    background: linear-gradient(90deg, #16efb5, #0a5cf0);
+    transform: translateY(-2px);
+    color: white !important;
+}
+
+.deep-link-button:active {
+    transform: translateY(0);
+}
+
+/* Make button prominent on mobile */
+@media (max-width: 768px) {
+    .deep-link-button {
+        font-size: 1.2em;
+        padding: 14px 28px;
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+/* ============================================================================
+   Force White Text on Blue Backgrounds (Light & Dark Mode)
+   ============================================================================ */
+
+/* Tech details - always white text */
+.tech-details,
+.tech-details details,
+.tech-details summary,
+.tech-details p,
+.tech-details strong,
+.tech-details code,
+#verification-details,
+#verification-details p,
+#verification-details strong {
+  color: white !important;
+}
+
+#verification-details code {
+  background: rgba(0, 0, 0, 0.4) !important;
+  color: white !important;
+}
+
+/* Also force white on all demo card content */
+.demo-card,
+.demo-card h3,
+.demo-card p,
+.demo-card strong,
+.status-text,
+.live-status,
+#status-message {
+  color: white !important;
+}

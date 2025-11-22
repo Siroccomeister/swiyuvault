@@ -1,26 +1,28 @@
 ---
 template: demo-verifier.html
 icon: lucide/shield-check
-title: Verifier Demo
+title: Demo for Verifier
 ---
-
-# Issuer workflow : create Verifiable Credentials
 
 # Verifier workflow : validate Verifiable Credentials
 
 Now that credentials are issued and stored in wallets, we can verify them in real-time using our Atarigo Verifier.
 
-## Live demo pre-requisites
+## Pre-requisites
 
-For the demo to work, we need the following:
+For the demo to work, we need to spin-up some services :
 
-- ✅ **Verifier Service**: Running on Docker (port 8083)
-- ✅ **ngrok Tunnel**: Public access to localhost:8083
-- ✅ **Valid Credential**: In your Swiyu wallet
+- [ ] docker swiyu issuer/verifier service : spin-up docker+service
+- [ ] cloudflare tunnels : make the issuer/verifier services reachable from the internet
+- [ ] vercel proxy : handles CORS errors by fixing headers (restricted by origins)
 
-!!! warning "Service Status"
-    The verifier must be running with a valid ngrok tunnel.  
-    Current endpoint: configured in settings.
+Check actual service status below before running your demo test. You need green ✅ checkmarks ! If conditions are not met - the demo is not going to work. Don't forget to give Spring Boot a little bit of time (15 sec) - perfectly normal.
+
+??? info "Service Status"
+    <div id="health-status">
+        <p>🔄 Checking services...</p>
+    </div>
+
 
 ---
 
@@ -35,20 +37,26 @@ Scan the QR code below with your Swiyu wallet to verify your membership credenti
       <h3>🎫 Scan to Verify Your Membership</h3>
       <p class="status-text">Waiting for credential presentation...</p>
       
-      <div class="qr-container">
-        <div id="qr-loading">
-          <div class="spinner"></div>
-          <p>Generating verification request...</p>
-        </div>
-        <img id="verification-qr" src="" alt="QR Code" style="display: none;">
-      </div>
+<div class="qr-container" style="display: flex !important; flex-direction: column !important; align-items: center !important;">
+  <div id="qr-loading">
+    <div class="spinner"></div>
+    <p>Generating verification request...</p>
+  </div>
+  <img id="verification-qr" src="" alt="QR Code" style="display: none; margin-bottom: 20px;">
+  
+  <a id="deeplink-button" href="#" target="_blank" 
+     style="display:none; text-decoration:none; padding:12px 24px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; border-radius:8px; font-weight:bold; cursor:pointer;">
+    📱 Open in SWIYU Wallet
+  </a>
+</div>
+
       
-      <div class="live-status">
+  <div class="live-status">
         <span class="pulse"></span>
         <span id="status-message">Listening for presentations...</span>
       </div>
       
-      <div class="tech-details">
+  <div class="tech-details">
         <details>
           <summary>🔍 Technical Details</summary>
           <div id="verification-details">
@@ -69,7 +77,7 @@ Scan the QR code below with your Swiyu wallet to verify your membership credenti
         <h2>Welcome!</h2>
       </div>
       
-      <div class="user-info">
+  <div class="user-info">
         <div class="info-row">
           <span class="label">Name:</span>
           <span class="value" id="user-name">-</span>
@@ -84,7 +92,7 @@ Scan the QR code below with your Swiyu wallet to verify your membership credenti
         </div>
       </div>
       
-      <div class="verification-proof">
+  <div class="verification-proof">
         <h4>🔐 Verification Details</h4>
         <p class="verified-by">
           <span class="check-icon">✓</span> 
@@ -99,7 +107,7 @@ Scan the QR code below with your Swiyu wallet to verify your membership credenti
         </p>
       </div>
       
-      <button id="reset-demo" class="action-btn">
+  <button id="reset-demo" class="action-btn">
         ↻ Next Guest
       </button>
     </div>

@@ -72,6 +72,7 @@ async function callAPI(method, path, body) {
   return response.json();
 }
 
+
 // QR code display
 function showQR(deeplink) {
   const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(deeplink);
@@ -83,7 +84,15 @@ function showQR(deeplink) {
   };
   
   img.src = qrUrl;
+  
+  // Show and set deep link button
+  const btn = document.getElementById('deeplink-button');
+  if (btn) {
+    btn.href = deeplink;
+    btn.style.display = 'inline-block';
+  }
 }
+
 
 // Status polling
 function poll(config) {
@@ -121,7 +130,6 @@ function updateStatus(state) {
   };
   updateEl('status-message', msgs[state] || state);
 }
-
 
 // Success display
 function showSuccess(data) {

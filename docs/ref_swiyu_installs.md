@@ -3,7 +3,7 @@ icon: lucide/blocks
 title: Swiyu installs
 ---
 
-#  Software & Workarounds
+#  :wrench: Software & Workarounds
 
 This section describes the local software requirements I had to comply with in order to work myself across the cookbooks. Furthermore - in order to set-up the test use cases with a demo logic in mind, different workarounds were required. Both are documented here.
 
@@ -163,4 +163,45 @@ flowchart LR
 
 
 ```
+
+### Work with Swiyu environmental variables
+
+This is the list of variables you'll need as you go through the process. Most of them are provided by the ePortal or through the different exchanges with the APIs.
+
+Practical hint : I compiled them into a single text file that I was loading into my shell environment : 
+
+``` py title="how to maintain your swiyu environment variables"
+
+# I recommend to load all variables into a text file
+export SWIYU_VARIABLE_X="<variable_X>
+export SWIYU_VARIABLE_Y="<variable_Y>
+export SWIYU_VARIABLE_Z="<variable_Z>
+
+# You may iterate/amend your text file.
+# Each time you'll need to reload it into the shell.
+source env_swiyu.txt
+```
+
+For illustration purposes, you can see below the main variables that I have been collecting and maintaining as I progressed step-by-step into the base & trust registry.
+
+!!! note "" 
+
+		SWIYU_IDENTIFIER_REGISTRY_URL
+		SWIYU_STATUS_REGISTRY_API_URL
+		
+		SWIYU_PARTNER_ID
+		IDENTIFIER_REGISTRY_URL
+		IDENTIFIER_REGISTRY_ID
+		STATUS_REGISTRY_URL
+		STATUS_REGISTRY_ID
+		
+		SWIYU_IDENTIFIER_REGISTRY_ACCESS_TOKEN
+		SWIYU_IDENTIFIER_REGISTRY_BOOTSTRAP_REFRESH_TOKEN
+		SWIYU_IDENTIFIER_REGISTRY_CUSTOMER_KEY
+		SWIYU_IDENTIFIER_REGISTRY_CUSTOMER_SECRET
+		
+		SWIYU_STATUS_REGISTRY_ACCESS_TOKEN
+		SWIYU_STATUS_REGISTRY_BOOTSTRAP_REFRESH_TOKEN
+		SWIYU_STATUS_REGISTRY_CUSTOMER_KEY
+		SWIYU_STATUS_REGISTRY_CUSTOMER_SECRET
 

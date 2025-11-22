@@ -15,5 +15,9 @@
 
 {% block scripts %}
   {{ super() }}
+  <!-- Demo-specific CSS -->
+  <link rel="stylesheet" href="{{ 'assets/stylesheets/verifier-demo.css' | url }}">
+  <!-- Demo-specific JavaScript -->
+  <script src="{{ 'assets/javascripts/health-check.js' | url }}"></script>
   <script src="{{ 'assets/javascripts/verifier-demo.js' | url }}"></script>
 {% endblock %}
