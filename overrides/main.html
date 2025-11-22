@@ -1,11 +1,5 @@
 {% extends "base.html" %}
-
-{#
-  This is the base template override for all pages.
-  
-  For page-specific JavaScript and configuration:
-  - Use custom templates (e.g., demo-issuer.html, demo-verifier.html)
-  - Reference them in page front matter: template: demo-issuer.html
-  
-  Global customizations that apply to ALL pages can be added here.
-#}
+{% block extrahead %}
+  {{ super() }}
+  <link rel="apple-touch-icon" sizes="512x512" href="/swiyuvault/assets/images/apple-touch-icon.png">
+{% endblock %}
