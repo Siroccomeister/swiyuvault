@@ -3,6 +3,7 @@
 {% block extrahead %}
   <script>
     window.VERIFIER_CONFIG = {
+      vc_proxy_url: "{{ config.extra.vc_proxy_url | default('') }}",
       verifier_url: "{{ config.extra.verifier_url | default('') }}",
       issuer_did: "{{ config.extra.verifier_issuer_did | default('') }}",
       refresh_interval: {{ config.extra.verifier_refresh_interval | default('2000') }},

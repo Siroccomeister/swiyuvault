@@ -17,8 +17,16 @@ This section is covering different security aspects as the project deals with se
 
 Online services :
 - GITHUB (2FA? access)
-- Cloudflare (via GitHub
-- Vercel (via GitHub)
+- Cloudflare (via GitHub) --> service token
+- Vercel (via GitHub) --> uses service token
+
+Back-end services :
+- didtoolbox keys
+- service_config_files
+
+Configuration variables :
+- zensical.toml
+- 
 
 
 

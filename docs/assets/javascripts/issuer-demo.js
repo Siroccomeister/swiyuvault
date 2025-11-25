@@ -1,5 +1,5 @@
 // ========================================
-// ISSUER DEMO - BUTTON INITIATED VERSION
+// ISSUER DEMO - SIMPLIFIED & CONFIG-DRIVEN
 // ========================================
 
 let demoActive = false;
@@ -9,25 +9,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
   const startBtn = document.getElementById('start-demo-btn');
   const demoContent = document.getElementById('demo-content');
-  const healthStatus = document.getElementById('health-status');
   
   if (startBtn && demoContent) {
-    demoContent.style.display = 'none';  // Hide demo content
-    startBtn.style.display = 'block';     // Show button
-    
-    startBtn.onclick = function() {
-      startDemo();
-    };
+    demoContent.style.display = 'none';
+    startBtn.style.display = 'block';
+    startBtn.onclick = startDemo;
   }
 });
 
-
 async function startDemo() {
   const startBtn = document.getElementById('start-demo-btn');
-  const form = document.getElementById('vc-form');
   const healthStatus = document.getElementById('health-status');
   
-  // Show checking status
   if (healthStatus) {
     healthStatus.innerHTML = '<p>🔄 Checking services...</p>';
     healthStatus.style.display = 'block';
@@ -35,7 +28,6 @@ async function startDemo() {
   
   if (startBtn) startBtn.disabled = true;
   
-  // Run health check
   const servicesOk = await checkServices();
   
   if (!servicesOk) {
@@ -46,13 +38,10 @@ async function startDemo() {
     return;
   }
   
-  // Services OK - show form
   if (startBtn) startBtn.style.display = 'none';
   
-// Show entire demo content (form + steps)
   const demoContent = document.getElementById('demo-content');
   if (demoContent) demoContent.style.display = 'block';
-
   
   demoActive = true;
   initializeForm();
@@ -60,24 +49,19 @@ async function startDemo() {
 
 async function checkServices() {
   const config = window.ZENSICAL_CONFIG || {};
-  const proxyUrl = config.vc_proxy_url || 'https://proxy-cors-azure.vercel.app/api/proxy';
-  const proxyBase = proxyUrl.replace('/api/proxy', '');
+  const proxyBase = (config.vc_proxy_url || '').replace('/api/proxy', '');
   const statusDiv = document.getElementById('health-status');
   
   try {
-    // Call the dedicated health endpoint
     const resp = await fetch(proxyBase + '/api/health', {
       method: 'GET',
       cache: 'no-cache'
     });
     
-    if (!resp.ok) {
-      throw new Error('Health check failed');
-    }
+    if (!resp.ok) throw new Error('Health check failed');
     
     const health = await resp.json();
     
-    // Parse results
     const results = [
       { 
         name: 'CORS Proxy', 
@@ -93,12 +77,9 @@ async function checkServices() {
     
     const allOk = results.every(r => r.ok);
     
-    // Display results
     let html = '<p><strong>' + (allOk ? '✅' : '❌') + ' Service Status</strong></p>';
     html += '<ul style="margin-top:10px;">';
-    results.forEach(r => {
-      html += '<li><strong>' + r.name + '</strong>: ' + r.message + '</li>';
-    });
+    results.forEach(r => html += '<li><strong>' + r.name + '</strong>: ' + r.message + '</li>');
     html += '</ul>';
     
     if (!allOk) {
@@ -106,7 +87,6 @@ async function checkServices() {
     }
     
     if (statusDiv) statusDiv.innerHTML = html;
-    
     return allOk;
     
   } catch (e) {
@@ -115,25 +95,20 @@ async function checkServices() {
   }
 }
 
-
 function initializeForm() {
   const config = window.ZENSICAL_CONFIG || {};
-
+  
   // Helper functions
   function formatDateDDMMYYYY(dateStr) {
     if (!dateStr || dateStr.length < 10) return dateStr;
     const parts = dateStr.split('-');
-    if (parts.length === 3) return `${parts[2]}-${parts[1]}-${parts[0]}`;
-    return dateStr;
+    return parts.length === 3 ? `${parts[2]}-${parts[1]}-${parts[0]}` : dateStr;
   }
 
   function parseDateYYYYMMDD(dateStr) {
     if (!dateStr) return '';
     const parts = dateStr.split('-');
-    if (parts.length === 3 && parts[0].length === 2) {
-      return `${parts[2]}-${parts[1]}-${parts[0]}`;
-    }
-    return dateStr;
+    return (parts.length === 3 && parts[0].length === 2) ? `${parts[2]}-${parts[1]}-${parts[0]}` : dateStr;
   }
 
   function padDate(dtStr) {
@@ -143,70 +118,45 @@ function initializeForm() {
     return dtStr;
   }
 
-  // Get form elements
-  const firstNameEl = document.getElementById('firstName');
-  const lastNameEl = document.getElementById('lastName');
-  const birthDateEl = document.getElementById('birthDate');
-  const membershipEl = document.getElementById('membershipClass');
-  const validFromEl = document.getElementById('validFrom');
-  const validUntilEl = document.getElementById('validUntil');
-  const statusListEl = document.getElementById('statusList');
-
-  // Set placeholders and defaults
-  if (firstNameEl) {
-    firstNameEl.placeholder = config.placeholder_firstname || "Enter your first name";
-    firstNameEl.value = config.default_name || "";
+  function setField(id, value, placeholder, readonly = false) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (value) el.value = value;
+    if (placeholder) el.placeholder = placeholder;
+    if (readonly) {
+      el.readOnly = true;
+      el.style.backgroundColor = '#f0f0f0';
+    }
   }
 
-  if (lastNameEl) {
-    lastNameEl.placeholder = config.placeholder_lastname || "Enter your last name";
-    lastNameEl.value = config.default_last || "";
-  }
-
-  if (birthDateEl) {
-    birthDateEl.placeholder = config.placeholder_birthdate || "DD-MM-YYYY";
-  }
+  // Set form fields from config
+  setField('firstName', config.default_name, config.placeholder_firstname);
+  setField('lastName', config.default_last, config.placeholder_lastname);
+  setField('birthDate', '', config.placeholder_birthdate);
+  setField('validFrom', config.default_valid_from, '', true);
+  setField('validUntil', config.default_valid_to, '', true);
+  setField('statusList', config.status_list_url, '', true);
 
   // Populate membership dropdown
+  const membershipEl = document.getElementById('membershipClass');
   if (membershipEl && config.membership_options) {
     membershipEl.innerHTML = '';
     config.membership_options.forEach(option => {
-      const optEl = document.createElement('option');
-      optEl.value = option;
-      optEl.textContent = option;
-      membershipEl.appendChild(optEl);
+      const opt = document.createElement('option');
+      opt.value = option;
+      opt.textContent = option;
+      membershipEl.appendChild(opt);
     });
-    membershipEl.value = config.default_class || "Platinum";
+    membershipEl.value = config.default_class || 'Platinum';
   }
 
-  // Set readonly fields
-  if (validFromEl) {
-    validFromEl.value = config.default_valid_from || "";
-    validFromEl.readOnly = true;
-    validFromEl.style.backgroundColor = '#f0f0f0';
-  }
-
-  if (validUntilEl) {
-    validUntilEl.value = config.default_valid_to || "";
-    validUntilEl.readOnly = true;
-    validUntilEl.style.backgroundColor = '#f0f0f0';
-  }
-
-if (statusListEl) {
-    statusListEl.value = config.status_list_url || "";
-    statusListEl.readOnly = true;
-    statusListEl.style.backgroundColor = '#f0f0f0';
-  }
-
-  // Auto-clear default values on focus
-  [firstNameEl, lastNameEl].forEach(el => {
+  // Auto-clear defaults on focus
+  ['firstName', 'lastName'].forEach(id => {
+    const el = document.getElementById(id);
     if (el) {
       el.addEventListener('focus', function() {
-        if (this.id === 'firstName' && this.value === (config.default_name || '')) {
-          this.value = '';
-        } else if (this.id === 'lastName' && this.value === (config.default_last || '')) {
-          this.value = '';
-        }
+        const defaultVal = id === 'firstName' ? config.default_name : config.default_last;
+        if (this.value === defaultVal) this.value = '';
       });
     }
   });
@@ -218,39 +168,35 @@ if (statusListEl) {
   form.onsubmit = async function(event) {
     event.preventDefault();
 
-    const endpoint = config.vc_proxy_url;
-    const birthDateInput = birthDateEl ? birthDateEl.value : '';
-    const birthDateAPI = parseDateYYYYMMDD(birthDateInput);
-
     const payload = {
       metadata_credential_supported_id: ["my-test-vc"],
       credential_subject_data: {
-        firstName: firstNameEl ? firstNameEl.value : '',
-        lastName: lastNameEl ? lastNameEl.value : '',
-        birthDate: birthDateAPI,
-        membershipClass: membershipEl ? membershipEl.value : 'Platinum'
+        firstName: document.getElementById('firstName')?.value || '',
+        lastName: document.getElementById('lastName')?.value || '',
+        birthDate: parseDateYYYYMMDD(document.getElementById('birthDate')?.value || ''),
+        membershipClass: document.getElementById('membershipClass')?.value || 'Platinum'
       },
       credential_meta: {
-         "vct#integrity": "sha256-0000000000000000000000000000000000000000000="
+        "vct#integrity": "sha256-0000000000000000000000000000000000000000000="
       },
       offer_validity_seconds: 86400,
-      credential_valid_until: padDate(validUntilEl ? validUntilEl.value : ''),
-      credential_valid_from: padDate(validFromEl ? validFromEl.value : ''),
-      status_lists: [statusListEl ? statusListEl.value : '']
+      credential_valid_until: padDate(document.getElementById('validUntil')?.value || ''),
+      credential_valid_from: padDate(document.getElementById('validFrom')?.value || ''),
+      status_lists: [document.getElementById('statusList')?.value || '']
     };
 
     const targetUrl = config.issuer_url + "/management/api/credentials";
-        
+    
     // Display cURL
     const curlEl = document.getElementById('curl-command');
     if (curlEl) {
-      curlEl.textContent = `curl -X POST '${endpoint}' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Target-URL: ${targetUrl}' \\\n  -d '${JSON.stringify(payload).replace(/\n/g, '')}'`;
+      curlEl.textContent = `curl -X POST '${config.vc_proxy_url}' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Target-URL: ${targetUrl}' \\\n  -d '${JSON.stringify(payload).replace(/\n/g, '')}'`;
     }
 
     // Call API
     let respData;
     try {
-      const resp = await fetch(endpoint, {
+      const resp = await fetch(config.vc_proxy_url, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -270,18 +216,15 @@ if (statusListEl) {
     const rawEl = document.getElementById('raw-response');
     if (rawEl) rawEl.textContent = JSON.stringify(respData, null, 2);
 
-    // Extract credential offer
+    // Extract and display credential offer
     let offerRaw = '';
-    if (respData && typeof respData === 'object') {
-      if (respData.offer_deeplink) {
-        const match = respData.offer_deeplink.match(/credential_offer=([^&]+)/);
-        if (match && match[1]) offerRaw = decodeURIComponent(match[1]);
-      } else if (respData.credential_offer) {
-        offerRaw = respData.credential_offer;
-      }
+    if (respData?.offer_deeplink) {
+      const match = respData.offer_deeplink.match(/credential_offer=([^&]+)/);
+      if (match?.[1]) offerRaw = decodeURIComponent(match[1]);
+    } else if (respData?.credential_offer) {
+      offerRaw = respData.credential_offer;
     }
 
-    // Check for valid offer
     const qrDiv = document.getElementById('qr-div');
     if (!qrDiv) return;
 
@@ -290,61 +233,26 @@ if (statusListEl) {
       return;
     }
 
-    // Build full deep link
     const offerDeeplink = `openid-credential-offer://?credential_offer=${offerRaw}`;
 
-    // Build instruction text
-    const instructionText = document.createElement('p');
-    instructionText.style.textAlign = 'center';
-    instructionText.style.marginTop = '0';
-    instructionText.style.marginBottom = '10px';
-    instructionText.textContent = '✅ Scan this QR with SWIYU wallet:';
+    qrDiv.innerHTML = `
+      <p style="text-align:center;margin-top:0;margin-bottom:10px;">✅ Scan this QR with SWIYU wallet:</p>
+      <div id="qr-code-container"></div>
+      <div style="text-align:center;margin-top:15px;">
+        <a href="${offerDeeplink}" class="deep-link-button" target="_blank" style="text-decoration:none;">📱 or open in SWIYU Wallet</a>
+      </div>
+    `;
 
-    // Build QR code container
-    const qrContainer = document.createElement('div');
-    qrContainer.id = 'qr-code-container';
-
-    // Build deep link button
-    const deepLinkWrapper = document.createElement('div');
-    deepLinkWrapper.style.textAlign = 'center';
-    deepLinkWrapper.style.marginTop = '15px';
-
-    const deepLinkButton = document.createElement('a');
-    deepLinkButton.href = offerDeeplink;
-    deepLinkButton.className = 'deep-link-button';
-    deepLinkButton.textContent = '📱 or open in SWIYU Wallet';
-    deepLinkButton.target = '_blank';
-    deepLinkButton.style.textDecoration = 'none';
-
-    deepLinkWrapper.appendChild(deepLinkButton);
-
-    // Clear and rebuild QR section
-    qrDiv.innerHTML = '';
-    qrDiv.appendChild(instructionText);
-    qrDiv.appendChild(qrContainer);
-    qrDiv.appendChild(deepLinkWrapper);
-
-    // Load QRCode library and generate
+    // Generate QR code
+    const qrContainer = document.getElementById('qr-code-container');
     if (typeof QRCode === 'undefined') {
       const script = document.createElement('script');
       script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
-      script.onload = () => {
-        new QRCode(qrContainer, {
-          text: offerDeeplink,
-          width: 256,
-          height: 256
-        });
-      };
-      script.onerror = () => {
-        qrContainer.innerHTML = '<p style="color:red;">⚠️ Failed to load QR library</p>';
-      };
+      script.onload = () => new QRCode(qrContainer, { text: offerDeeplink, width: 256, height: 256 });
+      script.onerror = () => qrContainer.innerHTML = '<p style="color:red;">⚠️ Failed to load QR library</p>';
       document.head.appendChild(script);
     } else {
-      new QRCode(qrContainer, {
-        text: offerDeeplink,
-        width: 256,
-        height: 256
-      });
+      new QRCode(qrContainer, { text: offerDeeplink, width: 256, height: 256 });
     }
   };
 }
