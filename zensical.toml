@@ -53,7 +53,7 @@ nav = [
       { "Business Partner" = "role_business_partner.md" },
       { "Issuer" = "role_issuer.md" },
       { "Verifier" = "role_verifier.md" },
-      { "User Experience" = "role_user.md" }
+#      { "User Experience" = "role_user.md" }
   ]},
   
   { "Demos" = [

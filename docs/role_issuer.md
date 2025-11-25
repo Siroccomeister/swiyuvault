@@ -62,9 +62,4 @@ This property will be needed you will use it in your credential issuance request
 Now :that we have a list identifier, we can issue a VC into it.
 Then : from the Wallet - I can read the QR code and download it.
 
-SPECIAL LOG
-
-3. Will the Credential Be Public or Pollute the Status List?
-	•	It will be listed in the connected status registry: Any issued credential—even a local test—will create entries in the status list connected to your issuer (test or prod, depending on your .env config).
-	
 	

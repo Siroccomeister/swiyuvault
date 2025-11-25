@@ -1,4 +1,4 @@
-// healthcheck.js - Updated version
+// health-check.js - Updated version
 
 console.log('🏥 Health check starting...');
 
