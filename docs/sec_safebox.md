@@ -15,6 +15,44 @@ This section is covering different security aspects as the project deals with se
 
 ## Key variables and where/how they are maintained
 
+Online services :
+- GITHUB (2FA? access)
+- Cloudflare (via GitHub
+- Vercel (via GitHub)
+
+
+
+
+crown jewels :
+- secret keys generated via didtoolbox
+- .env variables >> confirmed in .gitignore !!!!
+- cloudflare service tokens
+- proxy short-lived tokens
+- api end-point tokens?
+- no secrets to console
+
+https://www.perplexity.ai/search/d403b5d2-ca9d-4e61-bb3c-6e09ab31c7c9#107
+
+GitHub Repo (PUBLIC)
+  └── proxy.js (uses env vars) ✅ Safe to share
+
+Vercel Environment Variables (PRIVATE) 🔒
+  ├── CF_CLIENT_ID
+  └── CF_CLIENT_SECRET
+
+Cloudflare Service Token (PRIVATE) 🔒
+  └── Only known to Vercel proxy
+
+Your Tunnel (PROTECTED)
+  └── Only accepts requests with valid CF token
+
+
+
+Illustrate the traffic flows and the security layers
+Worse case : only api & ports are exposed
+
+
+
 CloudFlare tunnels
 Proxy
 

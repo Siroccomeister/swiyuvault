@@ -1,6 +1,5 @@
-// ============================================================================
-// HEALTH CHECK - DETAILED VERSION
-// ============================================================================
+// healthcheck.js - Updated version
+
 console.log('🏥 Health check starting...');
 
 async function runHealthCheck() {
@@ -11,89 +10,41 @@ async function runHealthCheck() {
     
     const config = window.ZENSICAL_CONFIG || window.VERIFIER_CONFIG || {};
     const proxyUrl = config.vc_proxy_url || 'https://proxy-cors-azure.vercel.app/api/proxy';
-    const issuerUrl = config.issuer_url || 'https://issuer.atarigo.net';
-    const verifierUrl = config.verifier_url || 'https://verifier.atarigo.net';
-    
-    const results = [];
+    const proxyBase = proxyUrl.replace('/api/proxy', ''); // Get base URL
     
     try {
-        // 1. Check proxy
-        try {
-            await fetch(proxyUrl, { method: 'OPTIONS', cache: 'no-cache' });
-            results.push({ name: 'CORS Proxy (Vercel)', status: 'up', message: '✅ UP' });
-        } catch (e) {
-            results.push({ name: 'CORS Proxy (Vercel)', status: 'down', message: '❌ Down' });
+        // Call the new health endpoint
+        const healthResp = await fetch(proxyBase + '/api/health', {
+            method: 'GET',
+            cache: 'no-cache'
+        });
+        
+        if (!healthResp.ok) {
+            throw new Error('Health check failed');
         }
         
-        // 2. Check issuer
-        try {
-            const issuerResp = await fetch(proxyUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Target-URL': issuerUrl + '/actuator/health'
-                },
-                cache: 'no-cache'
-            });
-            
-            if (issuerResp.ok) {
-                const data = await issuerResp.json();
-                const isHealthy = data.status === 'UP';
-                results.push({ 
-                    name: 'Issuer Service (via Tunnel)', 
-                    status: isHealthy ? 'up' : 'down', 
-                    message: isHealthy ? '✅ UP' : `⚠️ ${data.status}` 
-                });
-            } else {
-                results.push({ 
-                    name: 'Issuer Service (via Tunnel)', 
-                    status: 'down', 
-                    message: `❌ HTTP ${issuerResp.status}` 
-                });
-            }
-        } catch (e) {
-            results.push({ 
+        const health = await healthResp.json();
+        
+        // Parse results
+        const results = [
+            { 
+                name: 'CORS Proxy (Vercel)', 
+                status: health.services.proxy === 'up' ? 'up' : 'down', 
+                message: health.services.proxy === 'up' ? '✅ UP' : '❌ Down' 
+            },
+            { 
                 name: 'Issuer Service (via Tunnel)', 
-                status: 'down', 
-                message: '❌ Unreachable' 
-            });
-        }
-        
-        // 3. Check verifier
-        try {
-            const verifierResp = await fetch(proxyUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Target-URL': verifierUrl + '/actuator/health'
-                },
-                cache: 'no-cache'
-            });
-            
-            if (verifierResp.ok) {
-                const data = await verifierResp.json();
-                const isHealthy = data.status === 'UP';
-                results.push({ 
-                    name: 'Verifier Service (via Tunnel)', 
-                    status: isHealthy ? 'up' : 'down', 
-                    message: isHealthy ? '✅ UP' : `⚠️ ${data.status}` 
-                });
-            } else {
-                results.push({ 
-                    name: 'Verifier Service (via Tunnel)', 
-                    status: 'down', 
-                    message: `❌ HTTP ${verifierResp.status}` 
-                });
-            }
-        } catch (e) {
-            results.push({ 
+                status: health.services.issuer === 'UP' ? 'up' : 'down', 
+                message: health.services.issuer === 'UP' ? '✅ UP' : `❌ ${health.services.issuer}` 
+            },
+            { 
                 name: 'Verifier Service (via Tunnel)', 
-                status: 'down', 
-                message: '❌ Unreachable' 
-            });
-        }
+                status: health.services.verifier === 'UP' ? 'up' : 'down', 
+                message: health.services.verifier === 'UP' ? '✅ UP' : `❌ ${health.services.verifier}` 
+            }
+        ];
         
-        // Display results
+        // Display results (existing code)
         const upCount = results.filter(r => r.status === 'up').length;
         const totalCount = results.length;
         const allUp = upCount === totalCount;
@@ -122,7 +73,7 @@ async function runHealthCheck() {
         
     } catch (e) {
         console.error('❌ Health check error:', e);
-        statusDiv.innerHTML = '<p>❌ Check failed</p>';
+        statusDiv.innerHTML = '<p>❌ Health check failed</p>';
     }
 }
 
