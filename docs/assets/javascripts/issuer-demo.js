@@ -61,45 +61,35 @@ async function startDemo() {
 async function checkServices() {
   const config = window.ZENSICAL_CONFIG || {};
   const proxyUrl = config.vc_proxy_url || 'https://proxy-cors-azure.vercel.app/api/proxy';
-  const issuerUrl = config.issuer_url || 'https://issuer.atarigo.net';
+  const proxyBase = proxyUrl.replace('/api/proxy', '');
   const statusDiv = document.getElementById('health-status');
   
-  const results = [];
-  
   try {
-    // Check proxy
-    try {
-      await fetch(proxyUrl, { method: 'OPTIONS', cache: 'no-cache' });
-      results.push({ name: 'CORS Proxy', message: '✅ UP', ok: true });
-    } catch (e) {
-      results.push({ name: 'CORS Proxy', message: '❌ Down', ok: false });
+    // Call the dedicated health endpoint
+    const resp = await fetch(proxyBase + '/api/health', {
+      method: 'GET',
+      cache: 'no-cache'
+    });
+    
+    if (!resp.ok) {
+      throw new Error('Health check failed');
     }
     
-    // Check issuer
-    try {
-      const resp = await fetch(proxyUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Target-URL': issuerUrl + '/actuator/health'
-        },
-        cache: 'no-cache'
-      });
-      
-      if (resp.ok) {
-        const data = await resp.json();
-        const isHealthy = data.status === 'UP';
-        results.push({ 
-          name: 'Issuer Service', 
-          message: isHealthy ? '✅ UP' : `⚠️ ${data.status}`, 
-          ok: isHealthy 
-        });
-      } else {
-        results.push({ name: 'Issuer Service', message: `❌ HTTP ${resp.status}`, ok: false });
+    const health = await resp.json();
+    
+    // Parse results
+    const results = [
+      { 
+        name: 'CORS Proxy', 
+        message: health.services.proxy === 'up' ? '✅ UP' : '❌ Down', 
+        ok: health.services.proxy === 'up' 
+      },
+      { 
+        name: 'Issuer Service', 
+        message: health.services.issuer === 'UP' ? '✅ UP' : `❌ ${health.services.issuer}`, 
+        ok: health.services.issuer === 'UP' 
       }
-    } catch (e) {
-      results.push({ name: 'Issuer Service', message: '❌ Unreachable', ok: false });
-    }
+    ];
     
     const allOk = results.every(r => r.ok);
     
@@ -120,10 +110,11 @@ async function checkServices() {
     return allOk;
     
   } catch (e) {
-    if (statusDiv) statusDiv.innerHTML = '<p>❌ Health check failed</p>';
+    if (statusDiv) statusDiv.innerHTML = '<p>❌ Health check failed: ' + e.message + '</p>';
     return false;
   }
 }
+
 
 function initializeForm() {
   const config = window.ZENSICAL_CONFIG || {};
