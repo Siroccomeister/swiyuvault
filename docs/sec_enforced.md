@@ -65,7 +65,29 @@ Cloudflare Tunnel (encrypted, authenticated)
 Docker Services (localhost:8080, localhost:8083)
 ```
 
-**Result:** Four independent security checks before any request reaches application logic.
+**Result:** Four independent security checks before any request reaches application logic 💪.
+
+!!! warning "Layer 3 Cloudflare Access"
+
+```
+Cloudflare Edge
+├─ Validates CF-Access-Client-Id
+├─ Validates CF-Access-Client-Secret
+└─ Policy: Service Auth for management endpoints
+```
+
+**Enforces:** Zero-trust authentication for administrative endpoints.
+
+!!! note "Public Protocol Endpoints"
+    
+    Certain paths (`.well-known/*`, `/credential-offer/*`, `/credentials`, etc.) use a **Bypass policy** to remain publicly accessible, as required by the OpenID4VCI/VP specifications.
+    
+    These endpoints contain no sensitive data and are necessary for wallet interoperability. They remain protected by Cloudflare edge security (HTTPS, DDoS protection, rate limiting).
+    
+    **For details on public endpoint requirements and wallet integration, see:** [SWIYU Wallet Integration](role_user)
+```
+
+
 
 ***
 
@@ -119,10 +141,6 @@ All security-critical configurations are version-controlled and traceable:
 
 ***
 
-### Security Contact
+### Security Contact is via [GitHub account](https://github.com/Siroccomeister).
 
-**Last updated:** November 25, 2025
-
-***
-
-**This describes your security implementation accurately while demonstrating architectural maturity. Want me to adjust the tone or add/remove sections?** 🔒✨
+**Last updated:** November 25, 2025🔒✨

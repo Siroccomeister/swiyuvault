@@ -91,14 +91,20 @@ In this last step - you can now claim your credential. On your mobile phone with
 
 ## Swiyu App
 
-Now once a new Verifiable Credential has been issued, it can be retrieved by one instance (person/Swiyu app). The below picture of my mobile phone shows how these cards are then installed into your Swiyu Wallet.
+Now once a new Verifiable Credential has been issued, it can be retrieved by one instance (person/Swiyu app). The below picture of my mobile phone shows how these cards are then installed into your Swiyu Wallet. Go to the [User eXperience role](role_user) page for more info.
 
-<figure markdown>
-![Illustration of Swiyu eWallet app](assets/images/eWallet.png){ width=50% }
-<figcaption markdown> Illustration of Swiyu eWallet app</figcaption>
-</figure>
+!!! example
 
-<figure markdown>
-![Credential loaded into Swiyu eWallet app](assets/images/VC_card.png){ width=50% }
-<figcaption markdown> Credential loaded into Swiyu eWallet app</figcaption>
-</figure>
+    === "Illustration of Swiyu eWallet app"
+
+        <figure markdown>
+				![Illustration of Swiyu eWallet app](assets/images/eWallet.png){ width=50% }
+				<figcaption markdown> Illustration of Swiyu eWallet app</figcaption>
+				</figure>
+
+    === "Credential loaded into Swiyu eWallet app"
+
+        <figure markdown>
+				![Credential loaded into Swiyu eWallet app](assets/images/VC_card.png){ width=50% }
+				<figcaption markdown> Credential loaded into Swiyu eWallet app</figcaption>
+				</figure>
