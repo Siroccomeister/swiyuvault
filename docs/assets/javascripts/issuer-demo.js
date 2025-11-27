@@ -233,7 +233,8 @@ function initializeForm() {
       return;
     }
 
-    const offerDeeplink = `openid-credential-offer://?credential_offer=${offerRaw}`;
+    const offerDeeplink = `openid-credential-offer://?credential_offer=${encodeURIComponent(offerRaw)}`;
+
 
     qrDiv.innerHTML = `
       <p style="text-align:center;margin-top:0;margin-bottom:10px;">✅ Scan this QR with SWIYU wallet:</p>
